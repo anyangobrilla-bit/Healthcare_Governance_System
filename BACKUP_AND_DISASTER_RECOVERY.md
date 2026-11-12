@@ -1,3 +1,4 @@
+
 # Healthcare Data Backup and Disaster Recovery Policy
 
 ## 1. Purpose
@@ -38,6 +39,7 @@ This policy applies to the clinic's administrators, IT personnel and authorized 
 The clinic shall periodically test its backup and restoration procedures.
 
 Testing shall confirm:
+
 - Database integrity.
 - Availability of expected database tables.
 - Preservation of patient records.
@@ -48,17 +50,20 @@ Testing shall confirm:
 ## 7. Responsibilities
 
 **Administrator**
+
 - Authorizes database restoration.
 - Oversees backup and recovery activities.
 - Ensures that recovery activities are documented.
 
 **IT Officer**
+
 - Performs authorized database backups.
 - Checks backup integrity.
 - Protects backup files and encryption-key access.
 - Reports backup and recovery failures.
 
 **Authorized Healthcare Staff**
+
 - Follow information security procedures.
 - Report suspected data loss or security incidents.
 
@@ -72,37 +77,39 @@ This policy shall be reviewed periodically and whenever significant changes occu
 
 ---
 
-**Implementation note:** This policy describes the current project prototype. Backup frequency, retention periods, recovery time objectives and recovery point objectives must be formally approved by clinic management before operational deployment.
-##  Backup Retention and Disposal Policy
+**Implementation Note:** This policy describes the current project prototype. Backup frequency, retention periods, recovery time objectives (RTO) and recovery point objectives (RPO) must be formally approved by clinic management before operational deployment.
 
-### 1. Retention Period
+# Backup Retention and Disposal Policy
+
+## 1. Retention Period
 
 The healthcare system implements a 30-day backup retention period. Backups older than 30 days may be considered for deletion, subject to administrative review.
 
 The system also maintains a minimum of two backups to support recovery.
 
-### 2. Backup Protection
+## 2. Backup Protection
 
 The following safeguards are implemented:
 
 - The two most recent backups are protected from automatic cleanup.
-- The pre-encryption backup is specifically protected from deletion because it contains sensitive patient information in its earlier, unencrypted form.
+- The pre-encryption backup is protected against unauthorized deletion because it contains sensitive patient information in an unencrypted form. It must remain access-restricted and subject to an approved secure disposal procedure.
 - Only an authenticated Admin can perform backup cleanup.
 - The cleanup process checks eligibility before deleting any backup.
 - A preview function displays backups to retain and those eligible for review without deleting files.
 
-### 3. Administrative Responsibilities
+## 3. Administrative Responsibilities
 
 Backup retention is accessed through the Admin menu under **Manage Backup Retention**.
 
 The Admin can:
+
 - Preview backup retention.
 - Clean up eligible expired backups.
 - Return to the main Admin menu.
 
 Backup cleanup is currently a manual operation and is not automatically scheduled.
 
-### 4. Testing and Verification
+## 4. Testing and Verification
 
 The following tests were conducted:
 
@@ -120,6 +127,6 @@ The following tests were conducted:
 
 No backup files were deleted during these tests because all existing backups were within the retention period.
 
-### 5. Future Improvements
+## 5. Future Improvements
 
 Before production deployment, the clinic should approve the retention policy, establish an automated cleanup schedule, maintain secure off-site backup copies, and implement appropriate controls for the secure disposal of backups containing sensitive patient information.

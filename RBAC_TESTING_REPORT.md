@@ -1,8 +1,9 @@
+
 # ROLE-BASED ACCESS CONTROL (RBAC) TESTING REPORT
 
 ## 1. Introduction
 
-Role-Based Access Control (RBAC) was incorporated into the Healthcare Governance System to regulate access to information and system functions according to the responsibilities assigned to each staff member. The main purpose of this approach is to protect confidential patient information, prevent unauthorized access and ensure that users only perform activities relevant to their roles.
+Role-Based Access Control (RBAC) was incorporated into the Healthcare Governance System to regulate access to information and system functions according to the responsibilities assigned to each staff member. Its main purpose is to protect confidential patient information, prevent unauthorized access and ensure that users only perform activities relevant to their roles.
 
 Testing was conducted to establish whether the permission controls function as intended and whether unauthorized access attempts are properly recorded in the system's audit logs.
 
@@ -32,7 +33,7 @@ These permissions are intended to separate clinical, administrative and technica
 
 ## 4. RBAC Testing Procedures and Results
 
-Testing was conducted using the existing staff accounts. Each account was assessed against permissions that should either be granted or restricted according to its assigned role.
+Testing was conducted using existing staff accounts. Each account was assessed against permissions that should either be granted or restricted according to its assigned role.
 
 ### 4.1 Doctor Account
 

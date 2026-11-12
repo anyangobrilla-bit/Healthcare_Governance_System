@@ -156,17 +156,9 @@ The test confirmed that:
 5. The automatic logout event was successfully recorded in the audit log.
 6. The existing manual logout functionality was preserved.
 
-The automatic logout audit entry was verified as follows:
+The verified automatic logout audit record provides evidence that session termination is connected to the audit logging mechanism.
 
-- Audit Log ID: 131
-- Action: `SESSION_AUTO_LOGOUT`
-- Record Type: Session
-- Details: Automatically logged out after 15 minutes of menu inactivity.
-- Timestamp: 2026-11-10T10:04:26.750007+00:00
-
-This confirms that the automatic logout process is connected to the audit logging mechanism.
-
-**Implementation limitation:** The inactivity timeout currently monitors the main role menu. It does not monitor inactivity inside forms, backup-retention submenus, or other operations that use ordinary input functions. The implementation uses Windows console-specific functionality.
+**Implementation limitation:** The inactivity timeout currently monitors only the main role menu. It does not monitor inactivity inside forms, backup-retention submenus, or other operations that use ordinary input functions. The implementation uses Windows console-specific functionality and is not a complete session management solution.
 
 ## 8. Audit Logging Evidence
 
@@ -188,11 +180,11 @@ The authentication audit-sequence tests confirmed that successful login is not r
 
 The administrator MFA reset test confirmed that reset activity is recorded with the administrator's account, the target account, and the stated reason.
 
-The verified automatic logout entry (Log ID 131) also provides evidence that session expiration is recorded.
+The automatic logout test also verified that session expiration is recorded in the audit log.
 
 These records support accountability and help administrators investigate suspicious access attempts.
 
-## 9. Security Limitations
+## 9. Security Limitations and Future Improvements
 
 Although the authentication controls have passed the tests described above, some additional protections remain to be implemented or evaluated:
 
@@ -200,12 +192,11 @@ Although the authentication controls have passed the tests described above, some
 - Comprehensive session expiration covering all application operations and input forms.
 - Further testing of administrator MFA recovery under different operational scenarios.
 - Production-grade monitoring and alerting.
-- More comprehensive session management suitable for a production environment.
 - Further testing of concurrent authentication attempts and production deployment conditions.
 
 The temporary account lockouts are username-based and should be supplemented with additional controls before production deployment.
 
-The inactivity timeout is limited to the main role menu and is Windows-console-specific. It should not be considered a complete session management solution.
+The inactivity timeout is currently limited to the main role menu and uses Windows console-specific functionality. Broader session management should be implemented before the system is used in a real healthcare environment.
 
 The administrator MFA reset functionality has passed the implemented security tests, but further operational testing and a documented recovery procedure would strengthen its use in a real healthcare environment.
 

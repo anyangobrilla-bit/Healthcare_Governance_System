@@ -30,7 +30,7 @@ def get_backup_files():
 
     for file in BACKUP_DIR.iterdir():
 
-        # Only process regular files directly inside the backup folder.
+        # Process only regular files directly inside the backup folder.
         if not file.is_file() or file.is_symlink():
             continue
 
@@ -79,7 +79,7 @@ def get_cleanup_candidates(backups=None):
 
     for index, (timestamp, file) in enumerate(backups):
 
-        # Always retain the minimum number of newest backups.
+        # Always retain the two newest backups.
         if index < MINIMUM_BACKUPS_TO_KEEP:
             continue
 
@@ -87,7 +87,7 @@ def get_cleanup_candidates(backups=None):
         if file.name in PROTECTED_BACKUPS:
             continue
 
-        # Retain backups that are still within the retention period.
+        # Retain backups within the 30-day period.
         if timestamp >= cutoff:
             continue
 
@@ -97,7 +97,7 @@ def get_cleanup_candidates(backups=None):
 
 
 def preview_backup_cleanup():
-    """Preview retention decisions without deleting any files."""
+    """Preview retention decisions without deleting files."""
 
     print("\nBACKUP RETENTION PREVIEW")
     print("=" * 50)
@@ -156,11 +156,29 @@ def preview_backup_cleanup():
 def cleanup_expired_backups(user):
     """Delete expired backups after Admin authorisation and confirmation."""
 
-    if user.get("role") != "Admin":
-        raise PermissionError(
-            "Only an Admin can clean up expired backups."
+    # Backup cleanup is restricted to Admin accounts.
+    if not user or user.get("role") != "Admin":
+
+        user_id = user.get("user_id") if user else None
+        role = user.get("role", "Unknown") if user else "Unknown"
+
+        record_audit(
+            user_id,
+            "ACCESS_DENIED",
+            "Permission",
+            None,
+            (
+                f"Role: {role}; "
+                "Attempted permission: backup.manage; "
+                "Admin role required for backup cleanup."
+            )
         )
 
+        raise PermissionError(
+            "ACCESS DENIED: Only an Admin can clean up expired backups."
+        )
+
+    # Verify the Admin's assigned permission.
     require_permission(user, "backup.manage")
 
     backups = get_backup_files()
@@ -198,7 +216,7 @@ def cleanup_expired_backups(user):
     for timestamp, file in candidates:
 
         try:
-            # Recheck file location and type before deletion.
+            # Recheck the file location and type before deletion.
             if file.is_symlink():
                 raise OSError("Symbolic links cannot be deleted.")
 
