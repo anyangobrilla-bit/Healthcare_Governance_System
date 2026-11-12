@@ -1,0 +1,29 @@
+﻿# Environment variables and secrets
+.env
+.env.*
+*.key
+
+# Healthcare databases and encrypted backups
+*.db
+*.db-*
+*.db.enc
+backups/
+
+# Temporary and log files
+*.tmp
+*.log
+
+# Python generated files
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Editor and operating system files
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Local historical code snapshots
+code_safety_copies/
+*_before_*.py
